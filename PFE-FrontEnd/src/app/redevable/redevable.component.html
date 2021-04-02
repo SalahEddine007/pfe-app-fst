@@ -1,0 +1,478 @@
+<div class="container">
+  <div class="text-left">
+    <em>
+      <h4 class="text-secondary text-left">Informations Redevables</h4>
+    </em>
+    <hr style="border-bottom: solid 1px rgb(0, 183, 255)" />
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <div class="text-left">
+        <button
+          (click)="onOpenModal(null, 'add')"
+          type="button"
+          class="btn btn-outline-info text-right"
+        >
+          Ajouter un nouveau redevable
+          <i class="fa fa-user-plus"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-4"></div>
+    <div class="col-4">
+      <div class="text-right offset-md-4">
+        <form class="form-inline">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-light" id="searchName">
+                <i class="fa fa-search float-left text-info"></i>
+              </span>
+            </div>
+            <input
+              type="search"
+              (ngModelChange)="searchRedevables(key.value)"
+              #key="ngModel"
+              ngModel
+              name="key"
+              id="searchName"
+              class="form-control mr-sm-2"
+              placeholder="Search redevables..."
+              required
+            />
+          </div>
+
+          <!--  -->
+        </form>
+      </div>
+    </div>
+    <div *ngIf="redevables?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">NO Redevables!</h4>
+        <p>No Redevable were found.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div class="container" id="main-container">
+  <div class="row">
+    <div *ngFor="let redevable of redevables" class="col-md-12 col-xl-4 mb-3">
+      <div class="card border-info">
+        <div class="card-body row">
+          <div class="col-4">
+            <div class="square-box pull-left">
+              <!-- <i class="fa fa-users fa-5x"></i> -->
+              <img
+                src="https://via.placeholder.com/600/09f/fff"
+                alt=""
+                style="width: 100px; height: 100px"
+              />
+            </div>
+          </div>
+          <div class="col-8">
+            <h5 class="text-info">
+              <!-- <i class="fa fa-user float-right text-info"></i> -->
+              {{ redevable?.prenom }} {{ redevable?.nom }}
+            </h5>
+            <!-- <h5>Nom : </h5> -->
+          </div>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <i class="fa fa-at float-right text-info"></i>
+            Email : {{ redevable?.email }}
+          </li>
+          <li class="list-group-item">
+            <i class="fa fa-phone float-right text-info"></i>Telephone :
+            {{ redevable?.telephone }}
+          </li>
+          <li class="list-group-item">
+            <i class="fa fa-key float-right text-info"></i>Ref :
+            {{ redevable?.ref }}
+          </li>
+        </ul>
+        <div class="card-body">
+          <address class="text-muted">
+            <i class="fa fa-map-marker float-right text-info"></i>
+
+            Adresse : {{ redevable?.adresse }}
+          </address>
+        </div>
+        <div class="card-footer bg-light">
+          <!-- <div class="float-right btn-group btn-group-sm"></div> -->
+          <a
+            class="btn btn-outline-info float-right"
+            data-placement="top"
+            data-original-title="Edit"
+            style="margin-left: 5px"
+            (click)="onOpenModal(redevable, 'edit')"
+            ><i class="fa fa-pencil"></i>
+          </a>
+          <a
+            class="btn btn-outline-danger float-right"
+            (click)="onOpenModal(redevable, 'delete')"
+            data-placement="top"
+            data-original-title="Delete"
+            ><i class="fa fa-times"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Redevable Modal -->
+  <div
+    class="modal fade"
+    id="addRedevableModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="addRedevableModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #c3e5ff">
+          <h5 class="modal-title" id="addRedevableModalLabel">
+            Ajouter Redevable
+          </h5>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddRedevable(addForm)">
+            <div class="form-group">
+              <label for="nom">Nom</label>
+              <input
+                type="text"
+                ngModel
+                name="nom"
+                class="form-control"
+                id="nom"
+                placeholder="nom"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="prenom">Prenom</label>
+              <input
+                type="text"
+                ngModel
+                name="prenom"
+                class="form-control"
+                id="prenom"
+                placeholder="prenom"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="typeLabel">Type</label>
+              <!-- <select ngModel class="form-control" id="typeLabel">
+                  <option value="">Sélectionnez votre type</option>
+                  <option ngValue="Morale">Morale</option>
+                  <option ngValue="Physique">Physique</option>
+                </select> -->
+              <select
+                ngModel
+                (ngModelChange)="onTypeChanged($event)"
+                class="form-control"
+                id="typeLabel"
+                name="type"
+              >
+                <option [ngValue]="null" disabled>
+                  Sélectionnez votre type
+                </option>
+                <option value="physique">Physique</option>
+                <option value="morale">Morale</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ref">RC / CIN</label>
+              <input
+                type="text"
+                ngModel
+                name="ref"
+                class="form-control"
+                id="ref"
+                placeholder="ref"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="telephone">Telephone</label>
+              <input
+                type="text"
+                ngModel
+                name="telephone"
+                class="form-control"
+                id="telephone"
+                placeholder="telephone"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                ngModel
+                name="email"
+                class="form-control"
+                id="email"
+                placeholder="Email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="adresse">Adresse</label>
+              <textarea
+                type="text"
+                ngModel
+                id="adresse"
+                name="adresse"
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                required
+              ></textarea>
+              <!-- <input
+              type="text"
+              ngModel
+              name="adresse"
+              class="form-control"
+              id="adresse"
+              placeholder="adressee"
+              required
+            /> -->
+            </div>
+            <!-- <div class="form-group">
+            <label for="phone">Image URL</label>
+            <input
+              type="text"
+              ngModel
+              name="imageUrl"
+              class="form-control"
+              id="imageUrl"
+              placeholder="Image URL"
+              required
+            />
+          </div> -->
+            <div class="modal-footer">
+              <button
+                type="button"
+                id="add-redevable-form"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close <i class="fa fa-window-close"></i>
+              </button>
+              <button
+                [disabled]="addForm.invalid"
+                type="submit"
+                class="btn btn-success"
+              >
+                Save changes <i class="fa fa-save"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div
+    class="modal fade"
+    id="updateRedevableModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="redevableEditModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #c3e5ff">
+          <h5 class="modal-title" id="updateRedevableModalLabel">
+            Modifier Redevable : {{ editRedevable?.nom }}
+          </h5>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm">
+            <div class="form-group">
+              <label for="nom">Nom</label>
+              <input
+                type="text"
+                ngModel="{{ editRedevable?.nom }}"
+                name="nom"
+                class="form-control"
+                id="nom"
+                placeholder="nom"
+                required
+              />
+            </div>
+            <input
+              type="hidden"
+              ngModel="{{ editRedevable?.id }}"
+              name="id"
+              class="form-control"
+              id="id"
+            />
+            <div class="form-group">
+              <label for="prenom">Prenom</label>
+              <input
+                type="text"
+                ngModel="{{ editRedevable?.prenom }}"
+                name="prenom"
+                class="form-control"
+                id="prenom"
+                placeholder="prenom"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="ref">Ref</label>
+              <input
+                type="text"
+                ngModel="{{ editRedevable?.ref }}"
+                name="ref"
+                class="form-control"
+                id="ref"
+                placeholder="ref"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="typeLabel">Type</label>
+              <select
+                ngModel="{{ editRedevable?.type }}"
+                (ngModelChange)="onTypeChanged($event)"
+                class="form-control"
+                id="typeLabel"
+                name="type"
+              >
+                <option ngValue="physique">Physique</option>
+                <option ngValue="morale">Morale</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="telephone">Telephone</label>
+              <input
+                type="text"
+                ngModel="{{ editRedevable?.telephone }}"
+                name="telephone"
+                class="form-control"
+                id="telephone"
+                placeholder="telephone"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                ngModel="{{ editRedevable?.email }}"
+                name="email"
+                class="form-control"
+                id="email"
+                placeholder="Email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="adresse">Adresse</label>
+              <textarea
+                type="text"
+                ngModel="{{ editRedevable?.adresse }}"
+                id="adresse"
+                name="adresse"
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                required
+              ></textarea>
+              <!-- <input
+                  type="text"
+                  ngModel
+                  name="adresse"
+                  class="form-control"
+                  id="adresse"
+                  placeholder="adressee"
+                  required
+                /> -->
+            </div>
+            <!-- <div class="form-group">
+                <label for="phone">Image URL</label>
+                <input
+                  type="text"
+                  ngModel
+                  name="imageUrl"
+                  class="form-control"
+                  id="imageUrl"
+                  placeholder="Image URL"
+                  required
+                />
+              </div> -->
+            <div class="modal-footer">
+              <button
+                type="button"
+                id=""
+                class="btn btn-outline-secondary"
+                data-dismiss="modal"
+              >
+                Close <i class="fa fa-window-close"></i>
+              </button>
+              <button
+                (click)="onUpdateRedevable(editForm.value)"
+                data-dismiss="modal"
+                class="btn btn-outline-info"
+              >
+                Save changes <i class="fa fa-save"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div
+    class="modal fade"
+    id="deleteRedevableModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="deleteModelLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-danger">
+          <h5 class="modal-title text-white" id="deleteModelLabel">
+            Supprimer redevable
+          </h5>
+        </div>
+        <div class="modal-body">
+          <strong>
+            Etes-vous sûr que vous voulez supprimer le redevable :
+            {{ deleteRedevable?.nom }}?
+          </strong>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              No <i class="fa fa-window-close"></i>
+            </button>
+            <button
+              (click)="onDeleteRedevable(deleteRedevable?.id)"
+              class="btn btn-danger"
+              data-dismiss="modal"
+            >
+              Yes <i class="fa fa-check-circle"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification for no redevable -->
+</div>

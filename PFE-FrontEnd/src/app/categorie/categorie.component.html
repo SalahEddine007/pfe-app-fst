@@ -1,0 +1,339 @@
+<div class="container">
+  <div class="">
+    <em>
+      <h4 class="text-secondary">Informations Categories</h4>
+    </em>
+    <hr style="border-bottom: solid 1px rgb(0, 183, 255)" />
+  </div>
+</div>
+
+<div class="container bootstrap snippets bootdey" id="main-container">
+  <div class="row">
+    <div class="col-4">
+      <div class="text-left">
+        <button
+          type="button"
+          (click)="onOpenModal(null, 'add')"
+          class="btn btn-outline-info text-right"
+        >
+          Ajouter un nouveau categorie
+          <i class="fa fa-briefcase"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-4"></div>
+    <div class="col-4">
+      <div class="text-right offset-md-4">
+        <form class="form-inline">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-light" id="searchName">
+                <i class="fa fa-search float-left text-info"></i>
+              </span>
+            </div>
+            <input
+              type="search"
+              (ngModelChange)="searchCategories(key.value)"
+              #key="ngModel"
+              ngModel
+              name="key"
+              id="searchName"
+              class="form-control mr-sm-2"
+              placeholder="Search categorie..."
+              required
+            />
+          </div>
+
+          <!--  -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-12">
+      <div class="main-box no-header">
+        <div class="main-box-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="table-info">
+                <tr class="text-center">
+                  <th><i class="fa fa-key"></i></th>
+                  <th><span>Code</span></th>
+                  <th><span>Libelle</span></th>
+                  <th><span>Pourcentage</span></th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center" *ngFor="let categorie of categories">
+                  <td>
+                    <span class="id-subhead">{{ categorie?.id }}</span>
+                  </td>
+                  <td class="">{{ categorie?.code }}</td>
+                  <td>
+                    <span class="">{{ categorie?.libelle }}</span>
+                  </td>
+                  <td>{{ categorie?.pourcentage }}%</td>
+                  <td>
+                    <a
+                      class="btn btn-outline-info"
+                      data-placement="top"
+                      data-original-title="Edit"
+                      (click)="onOpenModal(categorie, 'edit')"
+                      ><i class="fa fa-pencil"></i>
+                    </a>
+                    <a
+                      class="btn btn-outline-danger"
+                      (click)="onOpenModal(categorie, 'delete')"
+                      data-placement="top"
+                      style="margin-left: 5px"
+                      data-original-title="Delete"
+                      ><i class="fa fa-times"></i
+                    ></a>
+                  </td>
+                  <!-- <td style="width: 20%">
+                    <a
+                      class="table-link text-info"
+                      data-original-title="Edit"
+                      (click)="onOpenModal(categorie, 'edit')"
+                    >
+                      <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                    <a class="table-link danger">
+                      <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Categorie Modal -->
+<div
+  class="modal fade"
+  id="addCategorieModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="addCategorieModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #c3e5ff">
+        <h5 class="modal-title" id="addCategorieModalLabel">
+          Ajouter Categorie
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form #addForm="ngForm" (ngSubmit)="onAddCategorie(addForm)">
+          <div class="form-group">
+            <label for="code">Code</label>
+            <input
+              type="text"
+              ngModel
+              name="code"
+              class="form-control"
+              id="code"
+              placeholder="code"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="libelle">Libelle</label>
+            <input
+              type="text"
+              ngModel
+              name="libelle"
+              class="form-control"
+              id="libelle"
+              placeholder="libelle"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="pourcentage">Pourcentage %</label>
+            <input
+              type="text"
+              ngModel
+              name="pourcentage"
+              class="form-control"
+              id="pourcentage"
+              placeholder="Exp: 20%"
+              required
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              id="add-categorie-form"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close <i class="fa fa-window-close"></i>
+            </button>
+            <button
+              [disabled]="addForm.invalid"
+              type="submit"
+              class="btn btn-success"
+            >
+              Save changes <i class="fa fa-save"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div
+  class="modal fade"
+  id="updateCategorieModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="cayegorieEditModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #c3e5ff">
+        <h5 class="modal-title" id="updateCategorieModalLabel">
+          Modifier Categorie : <em>{{ editCategorie?.code }}</em>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form #editForm="ngForm">
+          <div class="form-group">
+            <label for="code">Code</label>
+            <input
+              type="text"
+              ngModel="{{ editCategorie?.code }}"
+              name="code"
+              class="form-control"
+              id="code"
+              placeholder="code"
+              required
+            />
+          </div>
+          <input
+            type="hidden"
+            ngModel="{{ editCategorie?.id }}"
+            name="id"
+            class="form-control"
+            id="id"
+          />
+          <div class="form-group">
+            <label for="libelle">Libelle</label>
+            <input
+              type="text"
+              ngModel="{{ editCategorie?.libelle }}"
+              name="libelle"
+              class="form-control"
+              id="libelle"
+              placeholder="libelle"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="pourcentage">Pourcentage %</label>
+            <input
+              type="text"
+              ngModel="{{ editCategorie?.pourcentage }}"
+              name="pourcentage"
+              class="form-control"
+              id="pourcentage"
+              placeholder="Exp: 20%"
+              required
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              id=""
+              class="btn btn-outline-secondary"
+              data-dismiss="modal"
+            >
+              Close <i class="fa fa-window-close"></i>
+            </button>
+            <button
+              (click)="onUpdateCategorie(editForm.value)"
+              data-dismiss="modal"
+              class="btn btn-outline-info"
+            >
+              Save changes <i class="fa fa-save"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div
+  class="modal fade"
+  id="deleteCategorieModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteModelLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h5 class="modal-title text-white" id="deleteModelLabel">
+          Supprimer categorie
+        </h5>
+      </div>
+      <div class="modal-body">
+        <strong>
+          Etes-vous sûr que vous voulez supprimer le categorie :
+          {{ deleteCategorie?.code }} ?
+        </strong>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            No <i class="fa fa-window-close"></i>
+          </button>
+          <button
+            (click)="onDeleteCategorie(deleteCategorie?.id)"
+            class="btn btn-danger"
+            data-dismiss="modal"
+          >
+            Yes <i class="fa fa-check-circle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="container">
+  <div class="row">
+    <div *ngFor="let categorie of categories" class="col-md-4 col-xl-3">
+      <div class="card bg-c-blue order-card">
+        <div class="card-block">
+          <h6 class="m-b-20">{{ categorie?.code }}</h6>
+          <h2 class="text-right">
+            <i class="fa fa-briefcase f-left"></i
+            ><span>{{ categorie?.pourcentage }}%</span>
+          </h2>
+          <p class="m-b-0">
+            {{ categorie?.libelle }}<span class="f-right"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

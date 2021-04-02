@@ -1,0 +1,528 @@
+<div class="container">
+  <div class="">
+    <em>
+      <h4 class="text-secondary">Informations Locals</h4>
+    </em>
+    <hr style="border-bottom: solid 1px rgb(0, 183, 255)" />
+  </div>
+</div>
+<div class="container bootstrap snippets bootdey">
+  <div class="row">
+    <div class="col-4 mb-4">
+      <div class="text-left">
+        <button
+          (click)="onOpenModal(null, 'add')"
+          type="button"
+          class="btn btn-outline-info text-right"
+        >
+          Ajouter un nouveau local
+          <i class="fa fa-database"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-4"></div>
+    <div class="col-4 mb-4">
+      <div class="text-right offset-md-4">
+        <form class="form-inline">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-light" id="searchName">
+                <i class="fa fa-search float-left text-info"></i>
+              </span>
+            </div>
+            <input
+              type="search"
+              (ngModelChange)="searchLocals(key.value)"
+              #key="ngModel"
+              ngModel
+              name="key"
+              id="searchName"
+              class="form-control"
+              placeholder="Search local..."
+              required
+            />
+          </div>
+
+          <!--  -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container" id="main-container">
+    <div class="row">
+      <div class="col-6" *ngFor="let local of locals">
+        <div class="panel">
+          <div class="panel-body p-t-10">
+            <div class="media-main">
+              <a class="pull-left" href="#">
+                <img
+                  class="thumb-lg img-circle bx-s"
+                  src="https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
+                  alt="image"
+                  style="width: 100px; height: 90px"
+                />
+              </a>
+              <div class="pull-right btn-group-sm">
+                <a
+                  class="btn btn-outline-info float-left"
+                  data-placement="top"
+                  (click)="onOpenModal(local, 'edit')"
+                  data-original-title="Edit"
+                  ><i class="fa fa-pencil"></i>
+                </a>
+                <a
+                  class="btn btn-outline-danger float-right"
+                  style="margin-left: 5px"
+                  data-placement="top"
+                  (click)="onOpenModal(local, 'delete')"
+                  data-original-title="Delete"
+                  ><i class="fa fa-times"></i
+                ></a>
+                <input
+                  type="hidden"
+                  ngModel="{{ local?.ref }}"
+                  name="id"
+                  class="form-control"
+                  id="id"
+                />
+              </div>
+              <div class="info">
+                <p class="text-info lead">
+                  Propriétaire / Gérant :
+                  <strong class="text-muted">{{ local?.redevable.ref }}</strong>
+                </p>
+                <p class="text-success lead">
+                  Catégorie :
+                  <strong class="text-muted">{{
+                    local?.categorie.code
+                  }}</strong>
+                </p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item list-group-item-action">
+                  <p class="text-secondary">
+                    Nom comercial :
+                    <strong class="text-muted">{{
+                      local?.nom_Comercial
+                    }}</strong>
+                  </p>
+                </li>
+                <li class="list-group-item list-group-item-action">
+                  <p class="text-secondary">
+                    Numéro autorisation :
+                    <strong class="text-muted">{{
+                      local?.numero_Autorisation
+                    }}</strong>
+                  </p>
+                </li>
+                <li class="list-group-item list-group-item-action">
+                  <p class="text-secondary">
+                    Numéro caissier :
+                    <strong class="text-muted">{{
+                      local?.numero_caissier
+                    }}</strong>
+                  </p>
+                </li>
+                <li class="list-group-item list-group-item-action">
+                  <p class="text-secondary">
+                    Adresse :
+                    <strong class="text-muted">{{ local?.adress }}</strong>
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div class="clearfix"></div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Local Modal -->
+  <div
+    class="modal fade"
+    id="addLocalModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="addLocalModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #c3e5ff">
+          <h5 class="modal-title" id="addLocalModalLabel">Ajouter Local</h5>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddLocal()">
+            <div class="form-group">
+              <label for="ref">Ref</label>
+              <input
+                type="text"
+                [(ngModel)]="addLocal.ref"
+                name="ref"
+                class="form-control"
+                placeholder="ref"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="typeLabel">Redevable</label>
+              <select
+                [(ngModel)]="addLocal.redevable.id"
+                (ngModelChange)="onTypeChanged($event)"
+                class="form-control"
+                name="redevable"
+              >
+                <option [selected] disabled>
+                  Sélectionnez votre redevable
+                </option>
+                <option
+                  *ngFor="let redevable of redevables"
+                  [ngValue]="redevable.id"
+                >
+                  {{ redevable.ref }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="nom_Comercial">Nom Comercial</label>
+              <input
+                type="text"
+                [(ngModel)]="addLocal.nom_Comercial"
+                name="nom_Comercial"
+                class="form-control"
+                placeholder="nom_Comercial"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="numero_Autorisation">Numero Autorisation</label>
+              <input
+                type="text"
+                [(ngModel)]="addLocal.numero_Autorisation"
+                name="numero_Autorisation"
+                class="form-control"
+                placeholder="numero_Autorisation"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="numero_caissier">Numero Caissier</label>
+              <input
+                type="text"
+                [(ngModel)]="addLocal.numero_caissier"
+                name="numero_caissier"
+                class="form-control"
+                placeholder="numero_caissier"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="typeLabel">Categorie</label>
+              <select
+                [(ngModel)]="addLocal.categorie.id"
+                (ngModelChange)="onTypeChanged($event)"
+                class="form-control"
+                name="categorie"
+              >
+                <option [selected]>Sélectionnez votre categorie</option>
+                <option *ngFor="let local of locals" [ngValue]="local.id">
+                  {{ local.categorie.code }} {{ local.categorie.pourcentage }}%
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="adresse">Adresse</label>
+              <textarea
+                type="text"
+                [(ngModel)]="addLocal.adress"
+                name="adress"
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                required
+              ></textarea>
+              <!-- <input
+              type="text"
+              ngModel
+              name="adresse"
+              class="form-control"
+              id="adresse"
+              placeholder="adressee"
+              required
+            /> -->
+            </div>
+            <!-- <div class="form-group">
+            <label for="phone">Image URL</label>
+            <input
+              type="text"
+              ngModel
+              name="imageUrl"
+              class="form-control"
+              id="imageUrl"
+              placeholder="Image URL"
+              required
+            />
+          </div> -->
+            <div class="modal-footer">
+              <button
+                type="button"
+                id="add-local-form"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close <i class="fa fa-window-close"></i>
+              </button>
+              <button
+                [disabled]="addForm.invalid"
+                type="submit"
+                class="btn btn-success"
+              >
+                Save changes <i class="fa fa-save"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div
+    class="modal fade"
+    id="updateLocalModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="localEditModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #c3e5ff">
+          <h5 class="modal-title" id="updateLocalModalLabel">
+            Modifier Local : {{ editLocal.ref }}
+          </h5>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm">
+            <input
+              type="hidden"
+              [(ngModel)]="editLocal.id"
+              name="id"
+              class="form-control"
+              id="id"
+            />
+            <div class="form-group">
+              <label for="ref">Ref</label>
+              <input
+                type="text"
+                [(ngModel)]="editLocal.ref"
+                name="ref"
+                class="form-control"
+                id="ref"
+                placeholder="ref"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="typeLabel">Redevable</label>
+              <select
+                [(ngModel)]="editLocal.redevable.ref"
+                (ngModelChange)="onTypeChanged($event)"
+                class="form-control"
+                id="redevable"
+                name="redevable"
+              >
+                <option [(ngValue)]="editLocal?.redevable.id" disabled>
+                  Sélectionnez votre categorie
+                </option>
+                <option
+                  *ngFor="let redevable of redevables"
+                  ngValue="{{ redevable.id }}"
+                >
+                  {{ redevable.ref }}
+                </option>
+              </select>
+              <!-- <select
+                ngModel="{{ editLocal?.redevable.ref }}"
+                (ngModelChange)="onTypeChanged($event)"
+                class="form-control"
+                id="typeLabel"
+                name="redevable"
+              >
+                <option [ngValue]="null" disabled>
+                  Sélectionnez votre redevable
+                </option>
+                <option *ngFor="let local of locals">
+                  {{ local.redevable.ref }}
+                </option>
+              </select> -->
+            </div>
+            <div class="form-group">
+              <label for="nom_Comercial">Nom Comercial</label>
+              <input
+                type="text"
+                [(ngModel)]="editLocal.nom_Comercial"
+                name="nom_Comercial"
+                class="form-control"
+                id="nom_Comercial"
+                placeholder="nom_Comercial"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="numero_Autorisation">Numero Autorisation</label>
+              <input
+                type="text"
+                [(ngModel)]="editLocal.numero_Autorisation"
+                name="numero_Autorisation"
+                class="form-control"
+                id="numero_Autorisation"
+                placeholder="numero_Autorisation"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="numero_caissier">Numero Caissier</label>
+              <input
+                type="text"
+                [(ngModel)]="editLocal.numero_caissier"
+                name="numero_caissier"
+                class="form-control"
+                id="numero_caissier"
+                placeholder="numero_caissier"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="typeLabel">Categorie</label>
+              <select
+                [(ngModel)]="editLocal.categorie.code"
+                (ngModelChange)="onTypeChanged($event)"
+                class="form-control"
+                id="categorie"
+                name="categorie"
+              >
+                <option selected disabled>Sélectionnez votre categorie</option>
+                <option
+                  *ngFor="let categorie of categories"
+                  [ngValue]="categorie.id"
+                >
+                  {{ categorie.code }}
+                </option>
+              </select>
+              <!-- <select
+                ngModel="{{ editLocal?.categorie.code }}"
+                (ngModelChange)="onTypeChanged($event)"
+                class="form-control"
+                id="typeLabel"
+                name="categorie"
+              >
+                <option [ngValue]="null" disabled>
+                  Sélectionnez votre categorie
+                </option>
+                <option *ngFor="let local of locals">
+                  {{ local.categorie.code }}
+                </option>
+              </select> -->
+            </div>
+            <div class="form-group">
+              <label for="adresse">Adresse</label>
+              <textarea
+                type="text"
+                [(ngModel)]="editLocal.adress"
+                id="adress"
+                name="adress"
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                required
+              ></textarea>
+              <!-- <input
+              type="text"
+              ngModel
+              name="adresse"
+              class="form-control"
+              id="adresse"
+              placeholder="adressee"
+              required
+            /> -->
+            </div>
+            <!-- <div class="form-group">
+            <label for="phone">Image URL</label>
+            <input
+              type="text"
+              ngModel
+              name="imageUrl"
+              class="form-control"
+              id="imageUrl"
+              placeholder="Image URL"
+              required
+            />
+          </div> -->
+            <div class="modal-footer">
+              <button
+                type="button"
+                id=""
+                class="btn btn-outline-secondary"
+                data-dismiss="modal"
+              >
+                Close <i class="fa fa-window-close"></i>
+              </button>
+              <button
+                (click)="onUpdateLocal()"
+                data-dismiss="modal"
+                class="btn btn-outline-info"
+              >
+                Save changes <i class="fa fa-save"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div
+    class="modal fade"
+    id="deleteLocalModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="deleteModelLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-danger">
+          <h5 class="modal-title text-white" id="deleteModelLabel">
+            Supprimer local
+          </h5>
+        </div>
+        <div class="modal-body">
+          <strong>
+            Etes-vous sûr que vous voulez supprimer le local (ref) :
+            {{ deleteLocal?.ref }}, (address) : {{ deleteLocal?.adress }}
+          </strong>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              No <i class="fa fa-window-close"></i>
+            </button>
+            <button
+              (click)="onDeleteLocal(deleteLocal?.id)"
+              class="btn btn-danger"
+              data-dismiss="modal"
+            >
+              Yes <i class="fa fa-check-circle"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
