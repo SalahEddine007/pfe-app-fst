@@ -159,7 +159,7 @@
               <label for="ref">Ref</label>
               <input
                 type="text"
-                [(ngModel)]="addLocal.ref"
+                ngModel
                 name="ref"
                 class="form-control"
                 placeholder="ref"
@@ -169,7 +169,7 @@
             <div class="form-group">
               <label for="typeLabel">Redevable</label>
               <select
-                [(ngModel)]="addLocal.redevable.id"
+                ngModel
                 (ngModelChange)="onTypeChanged($event)"
                 class="form-control"
                 name="redevable"
@@ -189,7 +189,7 @@
               <label for="nom_Comercial">Nom Comercial</label>
               <input
                 type="text"
-                [(ngModel)]="addLocal.nom_Comercial"
+                ngModel
                 name="nom_Comercial"
                 class="form-control"
                 placeholder="nom_Comercial"
@@ -200,7 +200,7 @@
               <label for="numero_Autorisation">Numero Autorisation</label>
               <input
                 type="text"
-                [(ngModel)]="addLocal.numero_Autorisation"
+                ngModel
                 name="numero_Autorisation"
                 class="form-control"
                 placeholder="numero_Autorisation"
@@ -211,7 +211,7 @@
               <label for="numero_caissier">Numero Caissier</label>
               <input
                 type="text"
-                [(ngModel)]="addLocal.numero_caissier"
+                ngModel
                 name="numero_caissier"
                 class="form-control"
                 placeholder="numero_caissier"
@@ -221,7 +221,7 @@
             <div class="form-group">
               <label for="typeLabel">Categorie</label>
               <select
-                [(ngModel)]="addLocal.categorie.id"
+                ngModel
                 (ngModelChange)="onTypeChanged($event)"
                 class="form-control"
                 name="categorie"
@@ -236,7 +236,7 @@
               <label for="adresse">Adresse</label>
               <textarea
                 type="text"
-                [(ngModel)]="addLocal.adress"
+                ngModel
                 name="adress"
                 class="form-control"
                 id="exampleFormControlTextarea1"
@@ -334,11 +334,12 @@
                 id="redevable"
                 name="redevable"
               >
-                <option [ngValue]="null" disabled>
-                  Sélectionnez votre redevable
-                </option>
-                <option *ngFor="let local of locals">
-                  {{ local.redevable.ref }}
+                <option selected disabled>Sélectionnez votre redevable</option>
+                <option
+                  *ngFor="let redevable of redevables"
+                  [ngValue]="redevable.id"
+                >
+                  {{ redevable.ref }}
                 </option>
               </select>
               <!-- <select
@@ -401,28 +402,14 @@
                 id="categorie"
                 name="categorie"
               >
-                <option [ngValue]="null" disabled>
-                  Sélectionnez votre categorie
-                </option>
-                <option *ngFor="let categorie of categories">
-                  {{ categorie.code }}
-                </option>
-              </select>
-              <!-- <select
-                [(ngModel)]="editLocal.categorie.code"
-                (ngModelChange)="onTypeChanged($event)"
-                class="form-control"
-                id="categorie"
-                name="categorie"
-              >
                 <option selected disabled>Sélectionnez votre categorie</option>
                 <option
                   *ngFor="let categorie of categories"
-                  [ngValue]="categorie.id"
+                  [ngValue]="categorie.code"
                 >
                   {{ categorie.code }}
                 </option>
-              </select> -->
+              </select>
               <!-- <select
                 ngModel="{{ editLocal?.categorie.code }}"
                 (ngModelChange)="onTypeChanged($event)"

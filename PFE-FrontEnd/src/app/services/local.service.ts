@@ -47,4 +47,10 @@ export class LocalService {
       `${this.apiServerUrl}/app-communel/local/delete-local/id/${localId}`
     );
   }
+
+  public getLocalByRedevable(ref: string): Observable<void> {
+    return this.http.get<void>(
+      `${this.apiServerUrl}/app-communel/local/get-local-by-redevable/${ref}`
+    )
+  }
 }

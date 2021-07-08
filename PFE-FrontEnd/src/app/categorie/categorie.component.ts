@@ -27,7 +27,7 @@ export class CategorieComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }
@@ -41,7 +41,7 @@ export class CategorieComponent implements OnInit {
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
         addForm.reset();
       }
     );
@@ -54,7 +54,7 @@ export class CategorieComponent implements OnInit {
         this.getCategories();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }
@@ -66,7 +66,7 @@ export class CategorieComponent implements OnInit {
         this.getCategories();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }

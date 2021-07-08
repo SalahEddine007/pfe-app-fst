@@ -13,6 +13,17 @@ public class Local {
     private String numero_Autorisation;
     private String numero_caissier;
 
+    @Column(columnDefinition = "integer default 0")
+    private Long statut;
+
+    public Long getStatut() {
+        return statut;
+    }
+
+    public void setStatut(Long statut) {
+        this.statut = statut;
+    }
+
     @ManyToOne
     private Categorie categorie;
 
@@ -96,6 +107,8 @@ public class Local {
                 ", numero_caissier='" + numero_caissier + '\'' +
                 ", categorie=" + categorie +
                 ", redevable=" + redevable +
+                "statut=" + statut +
+
                 '}';
     }
 }

@@ -1,0 +1,636 @@
+<div class="container bootstrap snippets bootdey" id="main-container">
+  <div class="">
+    <em>
+      <h4 class="text-secondary">Informations Taxe Boisson</h4>
+    </em>
+    <hr style="border-bottom: solid 1px rgb(0, 183, 255)" />
+  </div>
+
+  <div class="row">
+    <div class="col-4 mb-4">
+      <div class="text-left">
+        <!-- <button
+              type="button"
+              
+              class="btn btn-outline-info text-right"
+            >
+              Ajouter un nouveau taxe boisson
+              <i class="fa fa-coffee"></i>
+            </button> -->
+      </div>
+    </div>
+    <div class="col-4"></div>
+    <div class="col-4">
+      <div class="text-right offset-md-4">
+        <form class="form-inline">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-light" id="searchName">
+                <i class="fa fa-search float-left text-info"></i>
+              </span>
+            </div>
+            <input
+              type="search"
+              (ngModelChange)="searchLocals(key.value)"
+              #key="ngModel"
+              ngModel
+              name="key"
+              id="searchName"
+              class="form-control mr-sm-2"
+              placeholder="Search redevable..."
+              required
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br />
+
+  <div class="row">
+    <div
+      class="col-4"
+      *ngFor="
+        let local of locals
+          | paginate: { itemsPerPage: 3, currentPage: pagelocalsPagination }
+      "
+    >
+      <div class="card card-margin">
+        <div class="card-header no-border">
+          <h5 class="card-title text-info">
+            Redevable RC/CIN :
+            <strong class="text-muted">{{ local?.redevable.prenom }}</strong>
+          </h5>
+        </div>
+        <div class="card-body pt-0">
+          <div class="widget-49">
+            <div class="widget-49-title-wrapper mb-3">
+              <div class="widget-49-date-primary">
+                <!-- <span class="widget-49-date-day">2021</span>
+                                <span class="widget-49-date-month">apr</span> -->
+
+                <span>
+                  <i
+                    *ngIf="local.statut > 0"
+                    class="fa fa-check-circle text-success fa-3x"
+                  ></i>
+                  <i
+                    *ngIf="local.statut === 0"
+                    class="fa fa-times-circle text-danger fa-3x"
+                  ></i>
+                </span>
+              </div>
+              <div class="widget-49-meeting-info">
+                <span class="widget-49-pro-title">{{ local?.adress }}</span>
+                <span class="widget-49-meeting-time"
+                  ><strong>Nom comercial : </strong>
+                  <mark class="text-info">{{ local?.nom_Comercial }}</mark>
+                </span>
+              </div>
+            </div>
+            <!-- <ol class="widget-49-meeting-points">
+                            <li class="widget-49-meeting-item"><span></span></li>
+                            <li class="widget-49-meeting-item"><span>Data migration is in scope</span></li>
+                            <li class="widget-49-meeting-item"><span>Session timeout increase to 30 minutes</span></li>
+                        </ol> -->
+            <div class="widget-49-meeting-action" *ngIf="local.statut === 0">
+              <!-- <div *ngFor="let taxeBoisson of taxeBoissons">     -->
+              <p><ins>Aucun TRIMESTRE payants.</ins></p>
+
+              <progressbar
+                [value]="5"
+                type="danger"
+                [striped]="true"
+                [animate]="true"
+                class="mb-2"
+                >0%</progressbar
+              >
+              <!-- </div> -->
+              <a
+                (click)="onOpenModal(null, 'add')"
+                type="button"
+                class="btn btn-sm btn-flash-border-primary text-info"
+                >Payer un trimestre <i class="fa fa-shopping-cart fa-2x"></i
+              ></a>
+            </div>
+            <div class="widget-49-meeting-action" *ngIf="local.statut === 20">
+              <!-- <div *ngFor="let taxeBoisson of taxeBoissons">     -->
+              <p><ins>1ér TRIMESTRE payants.</ins></p>
+
+              <progressbar
+                [value]="20"
+                type="warning"
+                [striped]="true"
+                [animate]="true"
+                class="mb-2"
+                >20%</progressbar
+              >
+              <!-- </div> -->
+              <a
+                (click)="onOpenModal(null, 'add')"
+                type="button"
+                class="btn btn-sm btn-flash-border-primary text-info"
+                >Payer un trimestre <i class="fa fa-shopping-cart fa-2x"></i
+              ></a>
+            </div>
+            <div class="widget-49-meeting-action" *ngIf="local.statut === 40">
+              <!-- <div *ngFor="let taxeBoisson of taxeBoissons">     -->
+              <p><ins>2éme TRIMESTRE payants.</ins></p>
+
+              <progressbar
+                [value]="40"
+                type="info"
+                [striped]="true"
+                [animate]="true"
+                class="mb-2"
+                >40%</progressbar
+              >
+              <!-- </div> -->
+              <a
+                (click)="onOpenModal(null, 'add')"
+                type="button"
+                class="btn btn-sm btn-flash-border-primary text-info"
+                >Payer un trimestre <i class="fa fa-shopping-cart fa-2x"></i
+              ></a>
+            </div>
+            <div class="widget-49-meeting-action" *ngIf="local.statut === 60">
+              <!-- <div *ngFor="let taxeBoisson of taxeBoissons">     -->
+              <p><ins>3éme TRIMESTRE payants.</ins></p>
+
+              <progressbar
+                [value]="60"
+                type="primary"
+                [striped]="true"
+                [animate]="true"
+                class="mb-2"
+                >60%</progressbar
+              >
+              <!-- </div> -->
+              <a
+                (click)="onOpenModal(null, 'add')"
+                type="button"
+                class="btn btn-sm btn-flash-border-primary text-info"
+                >Payer un trimestre <i class="fa fa-shopping-cart fa-2x"></i
+              ></a>
+            </div>
+
+            <div class="widget-49-meeting-action" *ngIf="local.statut === 100">
+              <!-- <div *ngFor="let taxeBoisson of taxeBoissons">     -->
+              <p><del>Toutes les TRIMESTRE son payants.</del></p>
+              <progressbar
+                max="100"
+                [value]="100"
+                type="success"
+                [striped]="true"
+                [animate]="true"
+                class="mb-2"
+                >100%</progressbar
+              >
+              <!-- </div> -->
+              <a href="#" class="btn btn-sm btn-flash-border-primary disabled"
+                >Payer un trimestre <i class="fa fa-shopping-cart fa-2x"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add Local Modal -->
+      <div
+        class="modal fade"
+        id="addTaxeBoissonModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="addTaxeBoissonModalLabel"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-dialog-centered modal-lg"
+          role="document"
+        >
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #c3e5ff">
+              <h5 class="modal-title" id="addTaxeBoissonModalLabel">
+                Ajouter un paiement taxe
+              </h5>
+            </div>
+            <div class="modal-body">
+              <form #addForm="ngForm" (ngSubmit)="onAddTaxBoisson()">
+                <input
+                  type="hidden"
+                  [(ngModel)]="editTaxeBoisson.id"
+                  name="id"
+                  class="form-control"
+                  id="id"
+                />
+                <div class="form-group">
+                  <label for="typeLabel">Sélectionnez le trimestre</label>
+                  <select
+                    [(ngModel)]="addTaxeBoisson.local.statut"
+                    class="form-control"
+                    name="statut"
+                  >
+                    <option [selected]>Sélectionnez votre trimestre</option>
+                    <option [ngValue]="20">Trimestre 1</option>
+                    <option [ngValue]="40">Trimestre 2</option>
+                    <option [ngValue]="60">Trimestre 3</option>
+                    <option [ngValue]="100">Trimestre 4</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="ref">Année</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="addTaxeBoisson.annee"
+                    name="annee"
+                    class="form-control"
+                    placeholder="annee"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="ref">Benefice</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="addTaxeBoisson.benefice"
+                    name="benefice"
+                    class="form-control"
+                    placeholder="benefice"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="typeLabel">Sélectionnez le local</label>
+                  <select
+                    [(ngModel)]="addTaxeBoisson.local.id"
+                    (ngModelChange)="onTypeChanged($event)"
+                    class="form-control"
+                    name="local"
+                  >
+                    <option [selected] disabled>
+                      Sélectionnez votre local
+                    </option>
+                    <option *ngFor="let local of locals" [ngValue]="local.id">
+                      {{ local.ref }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="typeLabel">Categorie</label>
+                  <select
+                    [(ngModel)]="addTaxeBoisson.categorie.id"
+                    (ngModelChange)="onTypeChanged($event)"
+                    class="form-control"
+                    name="categorie"
+                  >
+                    <option [selected]>Sélectionnez votre categorie</option>
+                    <option *ngFor="let local of locals" [ngValue]="local.id">
+                      {{ local.categorie.code }}
+                      {{ local.categorie.pourcentage }}%
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="ref">Montant Base</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="addTaxeBoisson.montantBase"
+                    name="montantBase"
+                    class="form-control"
+                    placeholder="montantBase"
+                    required
+                  />
+                </div>
+                <!-- <div class="form-group">
+          <label for="phone">Image URL</label>
+          <input
+            type="text"
+            ngModel
+            name="imageUrl"
+            class="form-control"
+            id="imageUrl"
+            placeholder="Image URL"
+            required
+          />
+        </div> -->
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    id="add-taxeBoisson-form"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close <i class="fa fa-window-close"></i>
+                  </button>
+                  <button
+                    [disabled]="addForm.invalid"
+                    type="submit"
+                    class="btn btn-success"
+                  >
+                    Save changes <i class="fa fa-save"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4"></div>
+
+    <div class="col-4 mb-3">
+      <div class="float-left">
+        <pagination-controls
+          (pageChange)="pagelocalsPagination = $event"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bootstrap snippets bootdey" id="main-container">
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <em>
+        <h4 class="text-secondary">Liste des paiements</h4>
+      </em>
+      <hr style="border-bottom: solid 1px rgb(0, 183, 255)" />
+    </div>
+    <div class="col-5 mb-4">
+      <p class="text-muted"></p>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="searchName"
+            ><i class="fa fa-search text-info"></i
+          ></span>
+        </div>
+        <input
+          type="search"
+          (ngModelChange)="searchPaiements(key.value)"
+          #key="ngModel"
+          ngModel
+          name="key"
+          id="searchName"
+          class="form-control mr-sm-2"
+          placeholder="recherche un paiement..."
+          required
+        />
+        <!-- <input type="text" 
+                #key="ngModel"
+                (ngModelChange)="searchPaiements(key.value)"
+                ngModel
+                name="key"
+                id="searchPaiement"
+                required
+                class="form-control" placeholder="recherche un paiement ..." /> -->
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-11">
+      <div class="main-box no-header">
+        <div class="main-box-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="table-info">
+                <tr class="text-center">
+                  <th><i class="fa fa-key"></i></th>
+                  <th><span>Local</span></th>
+                  <th><span>Redevable (RC/CN)</span></th>
+                  <th><span>Nom</span></th>
+                  <th><span>Prenom</span></th>
+                  <th><span>Status</span></th>
+                  <th><span>Nom Comercial</span></th>
+                  <!-- <th><span>N° Autorisation</span></th> -->
+                  <th><span>Annee</span></th>
+
+                  <th><span>Trimestre</span></th>
+                  <th><span>Benefice</span></th>
+
+                  <th><span>Categorie</span></th>
+                  <!-- <th><span>Montant de Base</span></th> -->
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="text-center"
+                  *ngFor="
+                    let taxeBoisson of taxeBoissons
+                      | paginate
+                        : {
+                            itemsPerPage: 6,
+                            currentPage: pagetaxeBoissonsPagination
+                          }
+                  "
+                >
+                  <td>
+                    <span class="id-subhead">{{ taxeBoisson?.id }}</span>
+                  </td>
+                  <td>
+                    <span class="">{{ taxeBoisson?.local.adress }}</span>
+                  </td>
+                  <td>
+                    <span class="">{{ taxeBoisson?.local.redevable.ref }}</span>
+                  </td>
+                  <td>
+                    <span class="">{{ taxeBoisson?.local.redevable.nom }}</span>
+                  </td>
+                  <td>
+                    <span class="">{{
+                      taxeBoisson?.local.redevable.prenom
+                    }}</span>
+                  </td>
+                  <td *ngIf="taxeBoisson?.local.statut === 100">
+                    <h6>
+                      <span class="badge badge-success">4 Trimestre</span>
+                    </h6>
+                  </td>
+                  <td *ngIf="taxeBoisson?.local.statut === 60">
+                    <h6>
+                      <span class="badge badge-primary">3 Trimestre</span>
+                    </h6>
+                  </td>
+                  <td *ngIf="taxeBoisson?.local.statut === 40">
+                    <h6><span class="badge badge-info">2 Trimestre</span></h6>
+                  </td>
+                  <td *ngIf="taxeBoisson?.local.statut === 20">
+                    <h6 class="">
+                      <span class="badge badge-warning">1 Trimestre</span>
+                    </h6>
+                  </td>
+                  <td *ngIf="taxeBoisson?.local.statut === 0">
+                    <h6 class="">
+                      <span class="badge badge-danger">0 Trimestre</span>
+                    </h6>
+                  </td>
+                  <td class="">
+                    <span class="">{{ taxeBoisson?.local.nom_Comercial }}</span>
+                  </td>
+                  <!-- <td class=""><span class="">{{ taxeBoisson?.local.numero_Autorisation }}</span></td> -->
+                  <td class="">
+                    <span class="">{{ taxeBoisson?.annee }}</span>
+                  </td>
+
+                  <td class="">
+                    <span class="">{{ taxeBoisson?.trimestre }}</span>
+                  </td>
+                  <td>
+                    <span class="">{{ taxeBoisson?.benefice }}%</span>
+                  </td>
+                  <td>
+                    <span class="">{{ taxeBoisson?.categorie.libelle }}</span>
+                  </td>
+                  <!-- <td>
+                    <span class="">{{ taxeBoisson?.montantBase }}</span>
+                  </td> -->
+                  <td>
+                    <a
+                      class="btn btn-outline-info"
+                      data-placement="top"
+                      data-original-title="Edit"
+                      ><i class="fa fa-pencil"></i>
+                    </a>
+                    <a
+                      class="btn btn-outline-danger"
+                      data-placement="top"
+                      style="margin-left: 5px"
+                      data-original-title="Delete"
+                      ><i class="fa fa-times"></i
+                    ></a>
+                  </td>
+                  <!-- <td style="width: 20%">
+                    <a
+                      class="table-link text-info"
+                      data-original-title="Edit"
+                      (click)="onOpenModal(categorie, 'edit')"
+                    >
+                      <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                    <a class="table-link danger">
+                      <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="row justify-content-center">
+    <div class="col-md-11">
+      <div class="main-box no-header">
+        <div class="main-box-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="table-info">
+                <tr class="text-center">
+                  <th><i class="fa fa-key"></i></th>
+                  <th><span>trimestre</span></th>
+                  <th><span>annee</span></th>
+                  <th><span>benefice</span></th>
+                  <th><span>montantBase</span></th>
+                  <th><span>local</span></th>
+                  <th><span>categorie</span></th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="text-center"
+                  *ngFor="
+                    let taxeBoisson of taxeBoissons
+                      | paginate
+                        : {
+                            itemsPerPage: 6,
+                            currentPage: pagetaxeBoissonsPagination
+                          }
+                  "
+                >
+                  <td>
+                    <span class="id-subhead">{{ taxeBoisson?.id }}</span>
+                  </td>
+                  <td>
+                    <span class="">{{ taxeBoisson?.trimestre }}</span>
+                  </td>
+                  <td>
+                    <span class="">{{ taxeBoisson?.annee }}</span>
+                  </td>
+                  <td>
+                    <span class="">{{ taxeBoisson?.benefice }}</span>
+                  </td>
+                  <td>
+                    <span class="">{{ taxeBoisson?.montantBase }}</span>
+                  </td>
+                  <td class="">
+                    <span class="">{{ taxeBoisson?.local.adress }}</span>
+                  </td>
+                  <!-- <td class=""><span class="">{{ taxeBoisson?.local.numero_Autorisation }}</span></td> -->
+
+                  <td>
+                    <span class="">{{ taxeBoisson?.categorie.libelle }}</span>
+                  </td>
+                  <!-- <td>
+                    <span class="">{{ taxeBoisson?.montantBase }}</span>
+                  </td> -->
+                  <td>
+                    <a
+                      class="btn btn-outline-info"
+                      data-placement="top"
+                      data-original-title="Edit"
+                      ><i class="fa fa-pencil"></i>
+                    </a>
+                    <a
+                      class="btn btn-outline-danger"
+                      data-placement="top"
+                      style="margin-left: 5px"
+                      data-original-title="Delete"
+                      ><i class="fa fa-times"></i
+                    ></a>
+                  </td>
+                  <!-- <td style="width: 20%">
+                    <a
+                      class="table-link text-info"
+                      data-original-title="Edit"
+                      (click)="onOpenModal(categorie, 'edit')"
+                    >
+                      <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                    <a class="table-link danger">
+                      <span class="fa-stack">
+                        <i class="fa fa-square fa-stack-2x"></i>
+                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                      </span>
+                    </a>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-5"></div>
+
+    <div class="col-3 mb-3">
+      <div class="float-left">
+        <!-- <pagination-controls (pageChange)="pagetaxeBoissonsPagination = $event"></pagination-controls> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,7 @@ export class Local {
     public nom_Comercial: string,
     public numero_Autorisation: string,
     public numero_caissier: string,
+    public statut: number,
     public categorie: Categorie = new Categorie(0, '', '', 0, 0),
     public redevable: Redevable = new Redevable(0, '', '', '', '', '', '', '')
   ) {}

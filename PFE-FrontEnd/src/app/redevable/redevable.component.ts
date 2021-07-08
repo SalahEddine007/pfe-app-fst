@@ -32,7 +32,7 @@ export class RedevableComponent implements OnInit {
         console.log('Data :' + response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }
@@ -46,7 +46,7 @@ export class RedevableComponent implements OnInit {
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
         addForm.reset();
       }
     );
@@ -59,7 +59,7 @@ export class RedevableComponent implements OnInit {
         this.getRedevables();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }
@@ -71,7 +71,7 @@ export class RedevableComponent implements OnInit {
         this.getRedevables();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }

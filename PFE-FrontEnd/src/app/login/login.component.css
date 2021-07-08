@@ -1,0 +1,9 @@
+.login,
+.image {
+  min-height: 85vh;
+}
+.bg-image {
+  background-image: url('https://exco.fr/wp-content/uploads/2020/05/Illustration-taxe-apprentissage.png');
+  background-size: cover;
+  /* background-position: center center; */
+}

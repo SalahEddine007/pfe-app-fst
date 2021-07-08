@@ -15,6 +15,9 @@ public class TaxeBoissonService {
     private TaxeBoissonDao taxeBoissonDao;
     @Autowired
     private CategorieService categorieService;
+    @Autowired
+    private LocalService localService;
+
 
 
     public List<TaxeBoisson> findAll() {
@@ -30,10 +33,12 @@ public class TaxeBoissonService {
             return -1;
         } else {
             Categorie categorie = categorieService.findCategorieById(taxeBoisson.getCategorie().getId());
+            Local local = localService.findLocalById(taxeBoisson.getLocal().getId());
             Double benefice = taxeBoisson.getBenefice();
             Double montant = categorie.getPourcentage() * benefice;
             Double total = taxeBoisson.getMontantBase() + montant;
             taxeBoisson.setMontantBase(total);
+            local.setStatut(taxeBoisson.getLocal().getStatut());
             taxeBoissonDao.save(taxeBoisson);
             System.out.println("le taxe boisson a créer avec success " + total);
             return 1;

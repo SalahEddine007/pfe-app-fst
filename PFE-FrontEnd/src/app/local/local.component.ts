@@ -16,8 +16,9 @@ import { CategorieService } from '../services/categorie.service';
 })
 export class LocalComponent implements OnInit {
   public locals: Local[];
-  public editLocal: Local = new Local(0, '', '', '', '', '');
-  public AddLocal: Local = new Local(0, '', '', '', '', '');
+  // public localsbyredevable: Local[];
+  public editLocal: Local = new Local(0, '', '', '', '', '', 0);
+  public AddLocal: Local = new Local(0, '', '', '', '', '', 0);
   public deleteLocal: Local;
 
   public redevables: Redevable[];
@@ -33,6 +34,7 @@ export class LocalComponent implements OnInit {
     this.getLocals();
     this.getRedevables();
     this.getCategories();
+    // this.getLocalByRedevable();
   }
 
   onTypeChanged(value) {
@@ -47,7 +49,7 @@ export class LocalComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }
@@ -59,7 +61,7 @@ export class LocalComponent implements OnInit {
         console.log(res);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }
@@ -71,10 +73,22 @@ export class LocalComponent implements OnInit {
         console.log(response);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }
+
+  // public getLocalByRedevable(): void {
+  //   this.localService.getLocalByRedevable().subscribe(
+  //     (response) => {
+  //       this.localsbyredevable = response;
+  //       console.log(response);
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       console.log(error.message);
+  //     }
+  //   );
+  // }
 
   // public get local() {
   //   return this.localService.locals;
@@ -89,11 +103,11 @@ export class LocalComponent implements OnInit {
       (response: Local) => {
         console.log(response);
         this.getLocals();
-        // onAddLocal.reset();
+        // addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
-        // onAddLocal.reset();
+        console.log(error.message);
+        // addForm.reset();
       }
     );
     console.log('ffffffff');
@@ -101,24 +115,34 @@ export class LocalComponent implements OnInit {
     console.log(this.AddLocal);
   }
 
-  public onUpdateLocal() {
-    document.getElementById('add-local-form').click();
-    this.localService.updateLocal(this.editLocal).subscribe(
+  // public onUpdateLocal() {
+  //   document.getElementById('add-local-form').click();
+  //   this.localService.updateLocal(this.editLocal).subscribe(
+  //     (response: Local) => {
+  //       console.log(response);
+  //       this.getLocals();
+  //       // onAddLocal.reset();
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       console.log(error.message);
+  //       // onAddLocal.reset();
+  //     }
+  //   );
+  //   console.log('ffffffff');
+
+  //   console.log(this.editLocal);
+  // }
+  public onUpdateLocal(local: Local): void {
+    this.localService.updateLocal(local).subscribe(
       (response: Local) => {
         console.log(response);
         this.getLocals();
-        // onAddLocal.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
-        // onAddLocal.reset();
+        console.log(error.message);
       }
     );
-    console.log('ffffffff');
-
-    console.log(this.editLocal);
   }
-
   // public onAddLocal(local: Local): void {
   //   this.localService.addLocal(local).subscribe(
   //     (response: Local) => {
@@ -126,19 +150,7 @@ export class LocalComponent implements OnInit {
   //       this.getLocals();
   //     },
   //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   );
-  // }
-
-  // public onUpdateLocal(local: Local): void {
-  //   this.localService.updateLocal(local).subscribe(
-  //     (response: Local) => {
-  //       console.log(response);
-  //       this.getLocals();
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
+  //       console.log(error.message);
   //     }
   //   );
   // }
@@ -150,7 +162,7 @@ export class LocalComponent implements OnInit {
         this.getLocals();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        console.log(error.message);
       }
     );
   }
@@ -160,7 +172,7 @@ export class LocalComponent implements OnInit {
     const results: Local[] = [];
     for (const local of this.locals) {
       if (
-        local.ref.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
+        local.redevable.ref.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
         local.adress.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
         local.nom_Comercial.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
         local.numero_caissier.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
