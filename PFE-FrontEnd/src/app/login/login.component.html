@@ -13,21 +13,7 @@
               <p class="text-muted mb-4">Connectez-vous à votre compte.</p>
               <form>
                 <div class="form-group mb-3">
-                  <input
-                    id="inputEmail"
-                    type="email"
-                    placeholder="Email address"
-                    required=""
-                    autofocus=""
-                    class="
-                      form-control
-                      rounded-pill
-                      text-primary
-                      border-4 border-info
-                      shadow-sm
-                      px-4
-                    "
-                  />
+                  <app-text-input [label]="'Nom d\'utlisateur'"></app-text-input>
                 </div>
                 <div class="form-group mb-3">
                   <input
@@ -45,17 +31,6 @@
                     "
                   />
                 </div>
-                <!-- <div class="custom-control custom-checkbox mb-3">
-                  <input
-                    id="customCheck1"
-                    type="checkbox"
-                    checked
-                    class="custom-control-input"
-                  />
-                  <label for="customCheck1" class="custom-control-label"
-                    >Remember password</label
-                  >
-                </div> -->
                 <button
                   type="submit"
                   class="
@@ -78,3 +53,5 @@
     <!-- End -->
   </div>
 </div>
+<ngx-spinner name="myspin" style="height: 100% !important" bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff"
+             type="ball-circus" [fullScreen]="true"><p style="color: white"> Chargement ... </p></ngx-spinner>

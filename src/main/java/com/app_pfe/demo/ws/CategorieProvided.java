@@ -60,11 +60,4 @@ public class CategorieProvided {
         Categorie update = categorieService.updateCategorieById(categorie);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
-
-    /*@PutMapping("/update/id/{id}")
-    public int update(@PathVariable("id") Categorie categorie) {
-        return categorieService.updateCategorie(categorie);
-    }*/
-
-
 }

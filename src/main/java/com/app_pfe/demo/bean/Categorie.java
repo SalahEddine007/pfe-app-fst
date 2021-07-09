@@ -1,7 +1,7 @@
 package com.app_pfe.demo.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -62,7 +62,6 @@ public class Categorie {
         return local;
     }
 
-    @Setter
     public void setLocal(List<Local> local) {
         this.local = local;
     }
@@ -72,7 +71,6 @@ public class Categorie {
         return taxeBoissons;
     }
 
-    @Setter
     public void setTaxeBoissons(List<TaxeBoisson> taxeBoissons) {
         this.taxeBoissons = taxeBoissons;
     }

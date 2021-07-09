@@ -1,12 +1,8 @@
 package com.app_pfe.demo.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jdk.nashorn.internal.objects.annotations.Setter;
-
 import javax.persistence.*;
+
 //import java.util.Date;
-import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 public class TaxeBoisson {
