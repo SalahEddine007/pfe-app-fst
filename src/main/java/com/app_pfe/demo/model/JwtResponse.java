@@ -1,4 +1,4 @@
-package model;
+package com.app_pfe.demo.model;
 
 import java.io.Serializable;
 
