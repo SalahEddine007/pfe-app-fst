@@ -1,5 +1,7 @@
 package com.app_pfe.demo.config;
 
+
+import com.app_pfe.demo.service.UserDetailsService;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,14 +13,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
-import java.util.List;
-
+import static java.util.List.of;
 
 @Configuration
 @EnableWebSecurity
@@ -58,9 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// We don't need CSRF for this example
 		httpSecurity.cors().configurationSource(request -> {
 			var cors = new CorsConfiguration();
-			cors.setAllowedOrigins(List.of("http://localhost:4200","http://localhost:4200/"));
-			cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
-			cors.setAllowedHeaders(List.of("*"));
+			cors.setAllowedOrigins(of("http://localhost:4200","http://localhost:4200/"));
+			cors.setAllowedMethods(of("GET","POST", "PUT", "DELETE", "OPTIONS"));
+			cors.setAllowedHeaders(of("*"));
 			return cors;
 		}).and().csrf().disable()
 				// dont authenticate this particular request
