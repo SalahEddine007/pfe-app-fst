@@ -19,6 +19,8 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
 
+import static com.google.common.collect.ImmutableList.of;
+
 
 @Configuration
 @EnableWebSecurity
@@ -58,9 +60,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// We don't need CSRF for this example
 		httpSecurity.cors().configurationSource(request -> {
 			var cors = new CorsConfiguration();
-			cors.setAllowedOrigins(List.of("http://localhost:4200","http://localhost:4200/"));
-			cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
-			cors.setAllowedHeaders(List.of("*"));
+			cors.setAllowedOrigins(of("http://localhost:4200","http://localhost:4200/"));
+			cors.setAllowedMethods(of("GET","POST", "PUT", "DELETE", "OPTIONS"));
+			cors.setAllowedHeaders(of("*"));
 			return cors;
 		}).and().csrf().disable()
 				// dont authenticate this particular request
