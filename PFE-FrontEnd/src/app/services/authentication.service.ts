@@ -25,13 +25,13 @@ export class AuthenticationService {
     }
 
     let headers = new HttpHeaders();
-    headers = headers.set('Authorization', ` ${token}`);
+    headers = headers.set('Authorization', `Bearer ${token}`);
     return this.http.get(this.apiServerUrl + '/loadUser', {headers}).pipe(
       map((user: User) => {
-        console.log(user)
         if (user) {
           localStorage.setItem('token', user.token);
           this.currentUserSource.next(user);
+
           return user;
         }
       })
@@ -43,9 +43,20 @@ export class AuthenticationService {
     return this.http.post(this.apiServerUrl + '/authenticate', values).pipe(
       map((user: User) => {
         if (user) {
+
           localStorage.setItem('token', user.token);
+
         }
       })
     )
   }
+
+  logout() {
+    console.log('logged out');
+    localStorage.removeItem('token');
+    this.currentUserSource.next(null);
+    location.reload();
+    this.router.navigate(['/login'])
+  }
+
 }

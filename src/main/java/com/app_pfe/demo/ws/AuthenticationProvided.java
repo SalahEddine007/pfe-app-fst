@@ -60,10 +60,11 @@ public class AuthenticationProvided {
     }
 
     @RequestMapping(value = "loadUser", method = RequestMethod.GET)
-    public String getName(Authentication authentication, Principal principal) {
-        System.out.println(authentication.getName());
-        System.out.println("-----------------");
-        System.out.println(principal.getName());
-        return "";
+    public ResponseEntity<JwtResponse> getName(Authentication authentication, Principal principal) {
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authentication.getName());
+
+        final String token = jwtTokenUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new JwtResponse(token));
     }
 }

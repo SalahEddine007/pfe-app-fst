@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = ("http://localhost:4200"))
+@CrossOrigin(origins = ("http://localhost:4200/dashboard/categories"))
 
 @RequestMapping(value = "app-communel/categorie")
 public class CategorieProvided {

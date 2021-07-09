@@ -37,17 +37,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.spinner.show('myspin');
-    this.authenticationService.login(this.loginForm.value).subscribe(() => {
+    this.authenticationService.login(this.loginForm.value).subscribe((res) => {
 
+      this.router.navigate(['/dashboard/main']);
       this.spinner.hide('myspin');
-      this.router.navigateByUrl('dashboard/main');
+      location.reload();
+
 
     }, error => {
-      console.log(error)
       this.spinner.hide('myspin');
       this.SnackBar.open('danger', error.error.message);
-    }, () => {
-      this.spinner.hide('myspin');
     });
   }
 }

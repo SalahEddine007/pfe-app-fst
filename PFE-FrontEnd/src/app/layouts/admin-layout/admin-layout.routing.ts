@@ -10,10 +10,9 @@ import {LoginComponent} from "../../login/login.component";
 
 export const AdminLayoutRoutes: Routes = [
   {path: 'main', component: DashboardComponent},
-  {path: 'all-redevables', component: RedevableComponent},
-  {path: 'all-local', component: LocalComponent},
-  {path: 'all-categories', component: CategorieComponent},
-  {path: 'all-taxe-boisson', component: TaxeBoissonComponent},
-  {path: 'login', component: LoginComponent},
+  {path: 'redevables', component: RedevableComponent},
+  {path: 'locals', component: LocalComponent},
+  {path: 'categories', component: CategorieComponent},
+  {path: 'taxeBoisson', component: TaxeBoissonComponent},
   {path: '', component: DashboardComponent},
 ];
