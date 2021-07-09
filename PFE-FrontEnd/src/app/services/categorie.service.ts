@@ -17,7 +17,7 @@ export class CategorieService {
   public getCategories(): Observable<Categorie[]> {
     const token = localStorage.getItem('token');
     let headers = new HttpHeaders();
-    headers = headers.set('Authorization', `Bearer ${token}`);
+    headers = headers.set('Authorization', `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkZnFzZHNxZHNkIiwiZXhwIjoxNjI1ODcyMDYzLCJpYXQiOjE2MjU4NTQwNjN9.e4nB3VQIPxAtIlx4gfk3vW9Zn6GdezlnqfatXZSmB1k4Dj5YpzswLjNvjVpnHMzzLYzOUZH05w47sPye4CA9VQ`);
     return this.http.get<Categorie[]>(`${this.apiServerUrl}/app-communel/categorie/all-categories`, {headers});
   }
 

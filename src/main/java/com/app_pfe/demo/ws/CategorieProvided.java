@@ -13,8 +13,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = ("http://localhost:4200/dashboard/categories"))
-
+@CrossOrigin(origins = ("http://localhost:4200"))
 @RequestMapping(value = "app-communel/categorie")
 public class CategorieProvided {
 
@@ -39,6 +38,8 @@ public class CategorieProvided {
     public Categorie findCategorieById(@PathVariable("id") Long Id) {
         return categorieService.findCategorieById(Id);
     }
+
+
 
     @GetMapping("/all-categories")
     public List<Categorie> findAll() {

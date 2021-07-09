@@ -1,5 +1,6 @@
 package com.app_pfe.demo.config;
 
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
+
 
 @Configuration
 @EnableWebSecurity
@@ -51,9 +56,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		// We don't need CSRF for this example
-		httpSecurity.csrf().disable()
+		httpSecurity.cors().configurationSource(request -> {
+			var cors = new CorsConfiguration();
+			cors.setAllowedOrigins(List.of("http://localhost:4200","http://localhost:4200/"));
+			cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
+			cors.setAllowedHeaders(List.of("*"));
+			return cors;
+		}).and().csrf().disable()
 				// dont authenticate this particular request
-				.authorizeRequests().antMatchers("/authenticate", "/register","/loadUser").permitAll().
+				.authorizeRequests().antMatchers("/authenticate", "/register","/loadUser", "/v2/api-docs",
+				"/swagger-resources/**",
+				"/configuration/ui",
+				"/configuration/security",
+				"/swagger-ui.html",
+				"/webjars/**").permitAll().
 				// all other requests need to be authenticated
 				anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
