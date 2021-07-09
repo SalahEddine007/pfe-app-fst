@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   createLoginForm() {
     this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
       password: new FormControl('', Validators.required),
     })
   }
@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.spinner.show('myspin');
     this.authenticationService.login(this.loginForm.value).subscribe(() => {
+
       this.spinner.hide('myspin');
       this.router.navigateByUrl('dashboard/main');
 

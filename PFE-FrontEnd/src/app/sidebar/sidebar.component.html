@@ -1,0 +1,33 @@
+
+<div class="sidebar-wrapper">
+  <div class="logo">
+    <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+      <div class="logo-image-small">
+        <img src="https://i.ibb.co/KxG2250/LOGO-IF-MAROC.png" alt="LOGO-IF-MAROC" border="0"/>
+      </div>
+    </a>
+    <a href="https://www.creative-tim.com" class="simple-text logo-normal">
+      IF RDV
+    </a>
+  </div>
+    <ul class="nav">
+      <li routerLinkActive="active" class="">
+        <a [routerLink]="'/dashboard/main'">
+          <i class="nc-icon nc-bank"></i>
+          <p>Dashboard</p>
+        </a>
+      </li>
+      <li routerLinkActive="active" class="">
+        <a [routerLink]="'/dashboard/user'">
+          <i class="nc-icon nc-single-02"></i>
+          <p>Profil de l'utilisateur</p>
+        </a>
+      </li>
+      <li routerLinkActive="active" class="">
+        <a [routerLink]="'/dashboard/services/groupe'" class="d-flex">
+          <img width="25" src="assets/img/technical-support.png" alt="icon">
+          <p>Services groupe</p>
+        </a>
+      </li>
+    </ul>
+</div>

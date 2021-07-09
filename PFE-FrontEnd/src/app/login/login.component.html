@@ -11,27 +11,14 @@
             <div class="col-lg-10 col-xl-7 mx-auto">
               <h3 class="display-4">Authentification</h3>
               <p class="text-muted mb-4">Connectez-vous à votre compte.</p>
-              <form>
+              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group mb-3">
-                  <app-text-input [label]="'Nom d\'utlisateur'"></app-text-input>
+                  <app-text-input formControlName="username" [label]="'Nom d\'utlisateur'"></app-text-input>
                 </div>
                 <div class="form-group mb-3">
-                  <input
-                    id="inputPassword"
-                    type="password"
-                    placeholder="Password"
-                    required=""
-                    class="
-                      form-control
-                      rounded-pill
-                      shadow-sm
-                      px-4
-                      text-primary
-                      border-4 border-info
-                    "
-                  />
+                  <app-text-input formControlName="password" [label]="'Mot de passe'" [type]="'password'" ></app-text-input>
                 </div>
-                <button
+                <button [disabled]="loginForm.invalid"
                   type="submit"
                   class="
                     btn btn-info btn-block
