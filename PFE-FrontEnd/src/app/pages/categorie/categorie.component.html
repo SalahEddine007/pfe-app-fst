@@ -66,13 +66,13 @@
               <tbody>
                 <tr class="text-center" *ngFor="let categorie of categories">
                   <td>
-                    <span class="id-subhead">{{ categorie?.id }}</span>
+                    <h4 class="id-subhead">{{ categorie?.id }}</h4>
                   </td>
-                  <td class="">{{ categorie?.code }}</td>
+                  <td class="text-secondary"><h4 class="">{{ categorie?.code }}</h4></td>
                   <td>
-                    <span class="">{{ categorie?.libelle }}</span>
+                    <h4 class="text-secondary">{{ categorie?.libelle }}</h4>
                   </td>
-                  <td>{{ categorie?.pourcentage }}%</td>
+                  <td><h4 class="text-success">{{ categorie?.pourcentage }}%</h4></td>
                   <td>
                     <a
                       class="btn btn-outline-info"

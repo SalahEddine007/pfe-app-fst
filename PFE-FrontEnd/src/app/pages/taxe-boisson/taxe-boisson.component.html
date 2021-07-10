@@ -57,10 +57,10 @@
     >
       <div class="card card-margin">
         <div class="card-header no-border">
-          <h5 class="card-title text-info">
+          <h3 class="card-title text-info">
             Redevable RC/CIN :
             <strong class="text-muted">{{ local?.redevable.prenom }}</strong>
-          </h5>
+          </h3>
         </div>
         <div class="card-body pt-0">
           <div class="widget-49">
@@ -82,6 +82,7 @@
               </div>
               <div class="widget-49-meeting-info">
                 <span class="widget-49-pro-title">{{ local?.adress }}</span>
+                <span class="widget-49-pro-title">{{ local?.categorie.code }}</span>
                 <span class="widget-49-meeting-time"
                   ><strong>Nom comercial : </strong>
                   <mark class="text-info">{{ local?.nom_Comercial }}</mark>
@@ -109,7 +110,7 @@
               <a
                 (click)="onOpenModal(null, 'add')"
                 type="button"
-                class="btn btn-sm btn-flash-border-primary text-info"
+                class="btn btn-sm btn-outline-info"
                 >Payer un trimestre <i class="fa fa-shopping-cart fa-2x"></i
               ></a>
             </div>
@@ -129,7 +130,7 @@
               <a
                 (click)="onOpenModal(null, 'add')"
                 type="button"
-                class="btn btn-sm btn-flash-border-primary text-info"
+                class="btn btn-sm btn-outline-info"
                 >Payer un trimestre <i class="fa fa-shopping-cart fa-2x"></i
               ></a>
             </div>
@@ -149,7 +150,7 @@
               <a
                 (click)="onOpenModal(null, 'add')"
                 type="button"
-                class="btn btn-sm btn-flash-border-primary text-info"
+                class="btn btn-sm btn-outline-info"
                 >Payer un trimestre <i class="fa fa-shopping-cart fa-2x"></i
               ></a>
             </div>
@@ -169,7 +170,7 @@
               <a
                 (click)="onOpenModal(null, 'add')"
                 type="button"
-                class="btn btn-sm btn-flash-border-primary text-info"
+                class="btn btn-sm btn-outline-info"
                 >Payer un trimestre <i class="fa fa-shopping-cart fa-2x"></i
               ></a>
             </div>
@@ -187,7 +188,7 @@
                 >100%</progressbar
               >
               <!-- </div> -->
-              <a href="#" class="btn btn-sm btn-flash-border-primary disabled"
+              <a href="#" class="btn btn-sm btn-outline-info disabled"
                 >Payer un trimestre <i class="fa fa-shopping-cart fa-2x"></i
               ></a>
             </div>
@@ -442,27 +443,27 @@
                     }}</span>
                   </td>
                   <td *ngIf="taxeBoisson?.local.statut === 100">
-                    <h6>
+                    <h3>
                       <span class="badge badge-success">4 Trimestre</span>
-                    </h6>
+                    </h3>
                   </td>
                   <td *ngIf="taxeBoisson?.local.statut === 60">
-                    <h6>
+                    <h3>
                       <span class="badge badge-primary">3 Trimestre</span>
-                    </h6>
+                    </h3>
                   </td>
                   <td *ngIf="taxeBoisson?.local.statut === 40">
-                    <h6><span class="badge badge-info">2 Trimestre</span></h6>
+                    <h3><span class="badge badge-info">2 Trimestre</span></h3>
                   </td>
                   <td *ngIf="taxeBoisson?.local.statut === 20">
-                    <h6 class="">
+                    <h3 class="">
                       <span class="badge badge-warning">1 Trimestre</span>
-                    </h6>
+                    </h3>
                   </td>
                   <td *ngIf="taxeBoisson?.local.statut === 0">
-                    <h6 class="">
+                    <h3 class="">
                       <span class="badge badge-danger">0 Trimestre</span>
-                    </h6>
+                    </h3>
                   </td>
                   <td class="">
                     <span class="">{{ taxeBoisson?.local.nom_Comercial }}</span>

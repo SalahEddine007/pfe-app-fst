@@ -57,7 +57,7 @@
               <a class="pull-left" href="#">
                 <img
                   class="thumb-lg img-circle bx-s"
-                  src="https://image.shutterstock.com/image-vector/ui-image-placeholder-wireframes-apps-260nw-1037719204.jpg"
+                  src="https://image.flaticon.com/icons/png/512/1351/1351515.png"
                   alt="image"
                   style="width: 100px; height: 90px"
                 />
@@ -226,11 +226,27 @@
                 class="form-control"
                 name="categorie"
               >
+                <option [selected] disabled>
+                  Sélectionnez votre categorie
+                </option>
+                <option
+                  *ngFor="let categorie of categories"
+                  [ngValue]="categorie.id"
+                >
+                  {{ categorie.code }}
+                </option>
+              </select>
+              <!-- <select
+                [(ngModel)]="addLocal.categorie.id"
+                (ngModelChange)="onTypeChanged($event)"
+                class="form-control"
+                name="categorie"
+              >
                 <option [selected]>Sélectionnez votre categorie</option>
                 <option *ngFor="let local of locals" [ngValue]="local.id">
                   {{ local.categorie.code }} {{ local.categorie.pourcentage }}%
                 </option>
-              </select>
+              </select> -->
             </div>
             <div class="form-group">
               <label for="adresse">Adresse</label>
